@@ -1,28 +1,297 @@
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Djezzy Clone - Working Version</title>
+    <title>Djezzy Clone - Fully Working Template</title>
     
-    <!-- ربط ملف الـ CSS تاعنا -->
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- ربط مكتبة Swiper (باش يخدم السلايدر) -->
+    <!-- ربط مكتبة Swiper (للسلايدر) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- ربط الأيقونات (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ================= إعدادات عامة ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* ================= الهيدر والقوائم ================= */
+        .top-bar {
+            background-color: #333;
+            color: #fff;
+            font-size: 12px;
+            padding: 5px 0;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+        }
+        .main-nav {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .main-nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #e71722;
+            text-transform: uppercase;
+        }
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            font-weight: bold;
+            color: #555;
+        }
+        .nav-links li:hover {
+            color: #e71722;
+            cursor: pointer;
+        }
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+            color: #e71722;
+            font-size: 18px;
+        }
+
+        /* ================= السلايدر ================= */
+        .swiper {
+            width: 100%;
+            height: 450px;
+            background: #000;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #e71722 !important;
+            background: rgba(255,255,255,0.7);
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50%;
+        }
+
+        /* ================= العروض (Offres) ================= */
+        .section-title {
+            text-align: center;
+            margin: 40px 0 30px;
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #222;
+        }
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .offer-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: #fff;
+            transition: transform 0.3s;
+        }
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+        .offer-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .offer-card .btn {
+            display: block;
+            text-align: center;
+            background: #e71722;
+            color: #fff;
+            padding: 12px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .offer-card .btn:hover {
+            background: #b01018;
+        }
+
+        /* ================= الخدمات (Services) ================= */
+        .services-section {
+            background: #eef1f5;
+            padding: 50px 0;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .service-item {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .service-item:hover {
+            box-shadow: 0 8px 20px rgba(231, 23, 34, 0.2);
+        }
+        .service-item i {
+            font-size: 40px;
+            color: #e71722;
+            margin-bottom: 15px;
+        }
+        .service-item h3 {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* ================= الهواتف (Mobiles) ================= */
+        .mobiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .phone-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .phone-card img {
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+        .phone-card h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        .phone-card .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e71722;
+            margin-bottom: 15px;
+        }
+        .phone-card .btn {
+            display: block;
+            background: #f4f4f4;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .phone-card .btn:hover {
+            background: #e71722;
+            color: #fff;
+        }
+        .ribbon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e71722;
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* ================= الفوتر ================= */
+        footer {
+            background: #222;
+            color: #ccc;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        .social-links {
+            margin-bottom: 20px;
+        }
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            line-height: 40px;
+            border-radius: 50%;
+            margin: 0 5px;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .social-links a:hover {
+            background: #e71722;
+        }
+        .copyright {
+            font-size: 14px;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        /* التجاوب مع الهواتف */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .swiper { height: 250px; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- القائمة العلوية -->
-    <nav class="navbar">
+    <!-- الشريط العلوي -->
+    <div class="top-bar">
+        <div class="container">
+            <span><i class="fas fa-globe"></i> Français</span>
+            <span><i class="fas fa-user"></i> Mon espace</span>
+            <span><i class="fas fa-phone"></i> Nous contacter</span>
+        </div>
+    </div>
+
+    <!-- القائمة الرئيسية -->
+    <nav class="main-nav">
         <div class="container">
             <div class="logo">Djezzy</div>
             <ul class="nav-links">
-                <li><a href="#">Offres</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Mobiles</a></li>
-                <li><a href="#">Mon espace</a></li>
+                <li>Offres</li>
+                <li>Services</li>
+                <li>Mobiles</li>
+                <li>E-Paiement</li>
             </ul>
+            <div class="nav-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
     </nav>
 
@@ -30,13 +299,16 @@
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="https://www.djezzy.dz/wp-content/uploads/2026/10/china-1920-x-1080-pix-5.png" alt="Slide 1">
+                <img src="https://www.djezzy.dz/wp-content/uploads/2026/11/re-sultat-financier-slider.png" alt="Slider 1">
             </div>
             <div class="swiper-slide">
-                <img src="https://www.djezzy.dz/wp-content/uploads/2026/07/slider-roaming-b2c.png" alt="Slide 2">
+                <img src="https://www.djezzy.dz/wp-content/uploads/2026/10/china-1920-x-1080-pix-5.png" alt="Slider 2">
             </div>
             <div class="swiper-slide">
-                <img src="https://www.djezzy.dz/wp-content/uploads/2026/06/web-rubrique-b2c-home-page.jpg" alt="Slide 3">
+                <img src="https://www.djezzy.dz/wp-content/uploads/2026/07/slider-roaming-b2c.png" alt="Slider 3">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://www.djezzy.dz/wp-content/uploads/2026/06/web-rubrique-b2c-home-page.jpg" alt="Slider 4">
             </div>
         </div>
         <div class="swiper-pagination"></div>
@@ -44,45 +316,126 @@
         <div class="swiper-button-prev"></div>
     </div>
 
-    <!-- قسم الخدمات -->
-    <section class="services container">
-        <h2 class="section-title">NOS SERVICES</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="icon">📞</div>
-                <h3>VoLTE</h3>
+    <!-- قسم العروض -->
+    <div class="container">
+        <h2 class="section-title">Nos Dernières Offres</h2>
+        <div class="offers-grid">
+            <div class="offer-card">
+                <img src="https://www.djezzy.dz/wp-content/uploads/2026/03/920-x-260-1.png" alt="Offer 1">
+                <a href="#" class="btn">Plus d'infos ici</a>
             </div>
-            <div class="service-card">
-                <div class="icon">🎬</div>
-                <h3>TOD</h3>
+            <div class="offer-card">
+                <img src="https://www.djezzy.dz/wp-content/uploads/2026/03/djezzynet-542x202-nos-dernieres-offres-1.jpg" alt="Offer 2">
+                <a href="#" class="btn">Plus d'infos ici</a>
             </div>
-            <div class="service-card">
-                <div class="icon">📚</div>
-                <h3>Dorouscom</h3>
-            </div>
-            <div class="service-card">
-                <div class="icon">🎮</div>
-                <h3>Digital Fennec</h3>
+            <div class="offer-card">
+                <img src="https://www.djezzy.dz/wp-content/uploads/2024/03/web-nos-dernieres-offres-c-414x227-copie-1.jpg" alt="Offer 3">
+                <a href="#" class="btn">Plus d'infos ici</a>
             </div>
         </div>
-        <div class="btn-container">
-            <button class="btn-primary" onclick="showAlert()">Tous les services Djezzy</button>
-        </div>
-    </section>
+    </div>
 
-    <!-- ربط ملف الـ JS تاعنا -->
-    <script src="script.js"></script>
-    
-    <!-- ربط مكتبة Swiper JS -->
+    <!-- قسم الخدمات -->
+    <div class="services-section">
+        <div class="container">
+            <h2 class="section-title">Nos Services</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>VoLTE</h3>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-film"></i>
+                    <h3>TOD</h3>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Dorouscom</h3>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Digital Fennec</h3>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-file-invoice"></i>
+                    <h3>E-Facture</h3>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>Tranquilo</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم الهواتف -->
+    <div class="container">
+        <h2 class="section-title">Nos Mobiles</h2>
+        <div class="mobiles-grid">
+            <div class="phone-card">
+                <span class="ribbon">Nouveau</span>
+                <img src="https://www.djezzy.dz/wp-content/uploads/2025/10/zte-blade-a35-150x200.png" alt="ZTE BLADE A35">
+                <h3>ZTE BLADE A35</h3>
+                <div class="price">17 900 DA</div>
+                <a href="#" class="btn">PLUS DE DÉTAILS</a>
+            </div>
+            <div class="phone-card">
+                <span class="ribbon">Nouveau</span>
+                <img src="https://www.djezzy.dz/wp-content/uploads/2025/10/zte-blade-a75-5g-2-150x200.png" alt="ZTE BLADE A75">
+                <h3>ZTE BLADE A75</h3>
+                <div class="price">31 900 DA</div>
+                <a href="#" class="btn">PLUS DE DÉTAILS</a>
+            </div>
+            <div class="phone-card">
+                <span class="ribbon">Nouveau</span>
+                <img src="https://www.djezzy.dz/wp-content/uploads/2025/10/zte-blade-v60-150x200.png" alt="ZTE BLADE V60">
+                <h3>ZTE BLADE V60</h3>
+                <div class="price">32 900 DA</div>
+                <a href="#" class="btn">PLUS DE DÉTAILS</a>
+            </div>
+            <div class="phone-card">
+                <span class="ribbon">Nouveau</span>
+                <img src="https://www.djezzy.dz/wp-content/uploads/2025/10/pova-6--150x200.png" alt="SPARK Go 1">
+                <h3>SPARK Go 1</h3>
+                <div class="price">18 000 DA</div>
+                <a href="#" class="btn">PLUS DE DÉTAILS</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <p class="copyright">© Djezzy 2026 | Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- ربط سكريبت Swiper -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     
     <!-- تفعيل السلايدر -->
     <script>
         var swiper = new Swiper(".mySwiper", {
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            autoplay: { delay: 3000, disableOnInteraction: false },
-            loop: true
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
         });
     </script>
 </body>
